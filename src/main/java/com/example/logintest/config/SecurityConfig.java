@@ -20,18 +20,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
-        String userName = "user2";
-        String password = "1234";
-        UserDetails user = User.builder()
-                .username(userName)
-                .password(passwordEncoder().encode(password))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService(){
+//        String userName = "user2";
+//        String password = "1234";
+//        UserDetails user = User.builder()
+//                .username(userName)
+//                .password(passwordEncoder().encode(password))
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
 
     @Bean
@@ -39,9 +39,12 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests((auth) ->{
             // /sample/all 은 아무나 다 접근할 수 있도록 함
             auth.requestMatchers("/sample/all").permitAll();
+            auth.requestMatchers("/sample/member").hasRole("USER");
         });
 
         httpSecurity.formLogin();
+        httpSecurity.csrf().disable();
+        httpSecurity.logout();
 
         return httpSecurity.build();
     }
