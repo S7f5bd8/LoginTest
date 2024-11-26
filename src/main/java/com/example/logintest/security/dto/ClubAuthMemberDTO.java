@@ -1,4 +1,4 @@
-package com.example.logintest.repository.dto;
+package com.example.logintest.security.dto;
 
 import lombok.Getter;
 import lombok.Setter;
